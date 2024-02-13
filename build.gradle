@@ -1,0 +1,67 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+}
+
+sourceCompatibility = '1.8'
+
+group 'github.koossa'
+version mavenPubVersion
+
+project.ext {
+	lwjglVersion = "3.3.2"
+	lwjglNatives = "natives-windows"
+	filesystem = "latest.release"
+	savesystem = "latest.release"
+	log = "latest.release"
+}
+
+repositories {
+	mavenCentral()
+	
+	maven { 
+    	url = uri("https://maven.pkg.github.com/KoosSA/MavenRepos") 
+    	credentials {
+        	username = project.findProperty("gpr.user") ?: System.getenv("GIT_USERNAME")
+        	password = project.findProperty("gpr.key") ?: System.getenv("GIT_TOKEN")
+    	}
+    }
+}
+
+dependencies {
+	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
+
+	implementation "org.lwjgl:lwjgl"
+	implementation "org.lwjgl:lwjgl-glfw"
+	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
+	runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
+
+	implementation "github.koossa:filesystem:$filesystem"
+	implementation "github.koossa:savesystem:$savesystem"
+	implementation "github.koossa:logger:$log"
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/KoosSA/MavenRepos")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GIT_USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GIT_TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+        	artifactId = 'inputlibrary'
+            from(components.java)
+        }
+    }
+}
