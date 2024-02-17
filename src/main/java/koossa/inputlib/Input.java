@@ -7,6 +7,7 @@ public class Input implements Runnable {
 	private static boolean running = false;
 	private static float updatesPerSecond = 100.000f;
 	private static float trueDeltaTime = 0;
+	private static InputManager manager;
 
 	public static void init(float updatesPerSecond) {
 		Input.updatesPerSecond = updatesPerSecond;
@@ -17,11 +18,17 @@ public class Input implements Runnable {
 		running = false;
 		return trueDeltaTime;
 	}
+	
+	public static void setKeyBinding(String function, Integer key) {
+		if (manager == null) return;
+		manager.getData().getKeyBindings().put(function, key);
+	}
 
 	@Override
 	public void run() {
 		Log.info(this, "Starting input library.");
 		running = true;
+		manager = new InputManager();
 		startLoop();
 		dispose();
 		Log.info(this, "Input library stopped.");
@@ -35,14 +42,22 @@ public class Input implements Runnable {
 			deltaTime = (float) (System.nanoTime() - prevTime) / 1000000000.00000f;
 			if (deltaTime >= targetTime) {
 				trueDeltaTime = deltaTime;
-				
+				manager.update();
 				prevTime = System.nanoTime();
+			} else {
+				try {
+					Thread.sleep((long) ((targetTime - deltaTime) * 1000));
+				} catch (InterruptedException e) {
+					Log.error(this, "Thread failed to sleep.");
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
 	private void dispose() {
 		running = false;
+		manager.dispose();
 	}
 
 }
