@@ -23,6 +23,11 @@ public class Input implements Runnable {
 		if (manager == null) return;
 		manager.getData().getKeyBindings().put(function, key);
 	}
+	
+	public static void setMouseBinding(String function, Integer button) {
+		if (manager == null) return;
+		manager.getData().getMouseBindings().put(function, button);
+	}
 
 	@Override
 	public void run() {
