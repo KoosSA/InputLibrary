@@ -29,8 +29,12 @@ class InputManager {
 
 	protected void update() {
 		handlers.forEach(h -> h.handleInput(this));
-		keysPrevPressed.clear();
-		keysPrevPressed.addAll(keysJustPressed);
+		keysJustPressed.forEach(key -> {
+			if (!keysPrevPressed.contains((Integer) key)) {
+				keysPrevPressed.add(key);
+			}
+		});
+		keysJustPressed.clear();
 	}
 
 	protected void dispose() {
