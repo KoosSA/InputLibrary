@@ -12,9 +12,6 @@ public class InputData implements ISavable {
 	private boolean invertCameraPitch = false;
 	
 	
-	
-	
-	
 	public HashMap<String, Integer> getKeyBindings() {
 		return keyBindings;
 	}

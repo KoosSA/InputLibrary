@@ -19,6 +19,14 @@ public class Input implements Runnable {
 		return trueDeltaTime;
 	}
 	
+	public static void addKeyPressEvent(int keycode) {
+		manager.registerKeyPress(keycode);
+	}
+	
+	public static void addKeyReleasedEvent(int keycode) {
+		manager.registerKeyReleased(keycode);
+	}
+	
 	public static void setKeyBinding(String function, Integer key) {
 		if (manager == null) return;
 		manager.getData().getKeyBindings().put(function, key);
