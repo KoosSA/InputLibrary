@@ -9,7 +9,7 @@ public class InputData implements ISavable {
 	
 	private HashMap<String, Integer> keyBindings = new HashMap<String, Integer>();
 	private HashMap<String, Integer> mouseBindings = new HashMap<String, Integer>();
-	private boolean invertCameraPitch = false;
+	private boolean invertMouseYAxis = false;
 	
 	
 	public HashMap<String, Integer> getKeyBindings() {
@@ -29,11 +29,11 @@ public class InputData implements ISavable {
 	}
 	
 	public void setInvertCameraPitch(boolean invertCameraPitch) {
-		this.invertCameraPitch = invertCameraPitch;
+		this.invertMouseYAxis = invertCameraPitch;
 	}
 	
 	public boolean isInvertCameraPitch() {
-		return invertCameraPitch;
+		return invertMouseYAxis;
 	}
 
 }
