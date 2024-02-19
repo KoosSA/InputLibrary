@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InputManager {
-	
+
 	private InputData data;
 	private List<Integer> keysJustPressed;
 	private List<Integer> keysPrevPressed;
@@ -12,8 +12,7 @@ public class InputManager {
 	private List<Integer> mouseJustPressed;
 	private List<Integer> mouseDown;
 	private List<IInputHandler> handlers;
-	
-	
+
 	public InputManager() {
 		data = new InputData();
 		data = InputData.loadOverride();
@@ -22,7 +21,7 @@ public class InputManager {
 		keysDown = new ArrayList<Integer>();
 		handlers = new ArrayList<IInputHandler>();
 	}
-	
+
 	protected InputData getData() {
 		return data;
 	}
@@ -40,7 +39,7 @@ public class InputManager {
 	protected void dispose() {
 		data.saveOverride();
 	}
-	
+
 	protected void registerKeyPress(int keycode) {
 		if (keysPrevPressed.contains(keycode) && !keysDown.contains(keycode)) {
 			keysDown.add(keycode);
@@ -49,27 +48,32 @@ public class InputManager {
 			keysJustPressed.add(keycode);
 		}
 	}
-	
+
 	protected void registerKeyReleased(int keycode) {
 		keysDown.remove((Integer) keycode);
 		keysJustPressed.remove((Integer) keycode);
 		keysPrevPressed.remove((Integer) keycode);
 	}
-	
+
 	public boolean isFunctionKeyJustPressed(String function) {
 		return keysJustPressed.contains(data.getKeyBindings().get(function));
 	}
-	
+
 	public boolean isFunctionKeyDown(String function) {
 		return keysDown.contains(data.getKeyBindings().get(function));
 	}
-	
+
 	public boolean isFunctionMouseButtonJustPressed(String function) {
 		return mouseJustPressed.contains(data.getMouseBindings().get(function));
 	}
-	
+
 	public boolean isFunctionMouseButtonDown(String function) {
 		return mouseDown.contains(data.getMouseBindings().get(function));
+	}
+
+	public void addInputHandler(IInputHandler handler) {
+		if (!handlers.contains(handler))
+			handlers.add(handler);
 	}
 
 }

@@ -51,6 +51,13 @@ public class Input implements Runnable {
 		Log.info(Input.class, "Registering new input manager: " + managerId);
 		allManagers.put(managerId, new InputManager());
 	}
+	
+	public static void registerInputHandler(String managerId, IInputHandler handler) {
+		InputManager m = allManagers.get(managerId);
+		if (m != null) {
+			m.addInputHandler(handler);
+		}
+	}
 
 	@Override
 	public void run() {
