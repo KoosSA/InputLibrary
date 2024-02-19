@@ -3,7 +3,7 @@ package koossa.inputlib;
 import java.util.ArrayList;
 import java.util.List;
 
-class InputManager {
+public class InputManager {
 	
 	private InputData data;
 	private List<Integer> keysJustPressed;
