@@ -1,5 +1,7 @@
 package koossa.inputlib;
 
+import java.util.HashMap;
+
 import com.koossa.logger.Log;
 
 public class Input implements Runnable {
@@ -8,6 +10,7 @@ public class Input implements Runnable {
 	private static float updatesPerSecond = 100.000f;
 	private static float trueDeltaTime = 0;
 	private static InputManager manager;
+	private static HashMap<String, InputManager> allManagers = new HashMap<String, InputManager>();
 
 	public static void init(float updatesPerSecond) {
 		Input.updatesPerSecond = updatesPerSecond;
@@ -20,10 +23,12 @@ public class Input implements Runnable {
 	}
 	
 	public static void addKeyPressEvent(int keycode) {
+		if (manager == null) return;
 		manager.registerKeyPress(keycode);
 	}
 	
 	public static void addKeyReleasedEvent(int keycode) {
+		if (manager == null) return;
 		manager.registerKeyReleased(keycode);
 	}
 	
@@ -36,12 +41,23 @@ public class Input implements Runnable {
 		if (manager == null) return;
 		manager.getData().getMouseBindings().put(function, button);
 	}
+	
+	public static void activateInputManager(String managerId) {
+		Log.info(Input.class, "Setting input manager to: " + managerId);
+		manager = allManagers.get(managerId);
+	}
+	
+	public static void registerNewInputManger(String managerId) {
+		Log.info(Input.class, "Registering new input manager: " + managerId);
+		allManagers.put(managerId, new InputManager());
+	}
 
 	@Override
 	public void run() {
 		Log.info(this, "Starting input library.");
 		running = true;
-		manager = new InputManager();
+		registerNewInputManger("DEFAULT_INPUT_MANAGER");
+		activateInputManager("DEFAULT_INPUT_MANAGER");
 		startLoop();
 		dispose();
 		Log.info(this, "Input library stopped.");
