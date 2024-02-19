@@ -9,7 +9,7 @@ public class Input implements Runnable {
 	private static boolean running = false;
 	private static float updatesPerSecond = 100.000f;
 	private static float trueDeltaTime = 0;
-	private static InputManager manager;
+	private static InputManager manager = new InputManager();
 	private static HashMap<String, InputManager> allManagers = new HashMap<String, InputManager>();
 
 	public static void init(float updatesPerSecond) {
@@ -63,8 +63,8 @@ public class Input implements Runnable {
 	public void run() {
 		Log.info(this, "Starting input library.");
 		running = true;
-		registerNewInputManger("DEFAULT_INPUT_MANAGER");
-		activateInputManager("DEFAULT_INPUT_MANAGER");
+//		registerNewInputManger("DEFAULT_INPUT_MANAGER");
+//		activateInputManager("DEFAULT_INPUT_MANAGER");
 		startLoop();
 		dispose();
 		Log.info(this, "Input library stopped.");
@@ -93,7 +93,7 @@ public class Input implements Runnable {
 
 	private void dispose() {
 		running = false;
-		manager.dispose();
+		InputManager.dispose();
 	}
 
 }

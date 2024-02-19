@@ -5,7 +5,7 @@ import java.util.List;
 
 public class InputManager {
 
-	private InputData data;
+	private static InputData data = InputData.loadOverride();
 	private List<Integer> keysJustPressed;
 	private List<Integer> keysPrevPressed;
 	private List<Integer> keysDown;
@@ -14,8 +14,6 @@ public class InputManager {
 	private List<IInputHandler> handlers;
 
 	public InputManager() {
-		data = new InputData();
-		data = InputData.loadOverride();
 		keysJustPressed = new ArrayList<Integer>();
 		keysPrevPressed = new ArrayList<Integer>();
 		keysDown = new ArrayList<Integer>();
@@ -36,7 +34,7 @@ public class InputManager {
 		keysJustPressed.clear();
 	}
 
-	protected void dispose() {
+	protected static void dispose() {
 		data.saveOverride();
 	}
 
