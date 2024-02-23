@@ -7,8 +7,9 @@ package koossa.inputlib;
 public interface IInputHandler {
 	
 	/**
-	 * All input checks are done in this method
-	 * @param input
+	 * All input checks are done in this method.
+	 *
+	 * @param input the inputManager
 	 */
 	void handleInput(InputManager input);
 
