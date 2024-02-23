@@ -9,8 +9,6 @@ group 'github.koossa'
 version mavenPubVersion
 
 project.ext {
-	lwjglVersion = "3.3.2"
-	lwjglNatives = "natives-windows"
 	filesystem = "latest.release"
 	savesystem = "latest.release"
 	log = "latest.release"
@@ -29,16 +27,12 @@ repositories {
 }
 
 dependencies {
-	implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
-
-	implementation "org.lwjgl:lwjgl"
-	implementation "org.lwjgl:lwjgl-glfw"
-	runtimeOnly "org.lwjgl:lwjgl::$lwjglNatives"
-	runtimeOnly "org.lwjgl:lwjgl-glfw::$lwjglNatives"
-
 	implementation "github.koossa:filesystem:$filesystem"
 	implementation "github.koossa:savesystem:$savesystem"
 	implementation "github.koossa:logger:$log"
+	
+	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 java {
