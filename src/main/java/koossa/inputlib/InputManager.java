@@ -73,31 +73,58 @@ public class InputManager {
 		currentMouseY = y;
 	}
 
+	/**
+	 * Returns true if the corresponding key was pressed once
+	 * @param function
+	 * @return
+	 */
 	public boolean isFunctionKeyJustPressed(String function) {
 		return keysJustPressed.contains(data.getKeyBindings().get(function));
 	}
 
+	/**
+	 * Returns true if the corresponding key is being held down
+	 * @param function
+	 * @return
+	 */
 	public boolean isFunctionKeyDown(String function) {
 		return keysDown.contains(data.getKeyBindings().get(function));
 	}
 
+	/**
+	 * Returns true if the corresponding mouse button was just pressed.
+	 * @param function
+	 * @return
+	 */
 	public boolean isFunctionMouseButtonJustPressed(String function) {
 		return mouseJustPressed.contains(data.getMouseBindings().get(function));
 	}
 
+	/**
+	 * Returns true if the corresponding mouse button is being held down.
+	 * @param function
+	 * @return
+	 */
 	public boolean isFunctionMouseButtonDown(String function) {
 		return mouseDown.contains(data.getMouseBindings().get(function));
 	}
 
-	public void addInputHandler(IInputHandler handler) {
+	protected void addInputHandler(IInputHandler handler) {
 		if (!handlers.contains(handler))
 			handlers.add(handler);
 	}
 	
+	/**
+	 * Gets the cursor deltaX movement
+	 * @return float
+	 */
 	public float getDeltaMouseX() {
 		return deltaMouseX;
 	}
-	
+	/**
+	 * Gets the cursor deltaY movement
+	 * @return
+	 */
 	public float getDeltaMouseY() {
 		return deltaMouseY;
 	}
