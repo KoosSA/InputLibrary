@@ -58,6 +58,20 @@ public class Input implements Runnable {
 			m.addInputHandler(handler);
 		}
 	}
+	
+	public static void addMouseMovementEvent(float x, float y) {
+		manager.registerMouseMovement(x, y);
+	}
+	
+	public static void addMouseButtonPressedEvent(int button) {
+		if (manager == null) return;
+		manager.registerMouseButtonPress(button);
+	}
+	
+	public static void addMouseButtonReleasedEvent(int button) {
+		if (manager == null) return;
+		manager.registerMouseButtonRelease(button);
+	}
 
 	@Override
 	public void run() {
@@ -95,5 +109,9 @@ public class Input implements Runnable {
 		running = false;
 		InputManager.dispose();
 	}
+
+	
+
+	
 
 }

@@ -7,17 +7,23 @@ public class InputManager {
 
 	private static InputData data = InputData.loadOverride();
 	private List<Integer> keysJustPressed;
-	private List<Integer> keysPrevPressed;
 	private List<Integer> keysDown;
 	private List<Integer> mouseJustPressed;
 	private List<Integer> mouseDown;
 	private List<IInputHandler> handlers;
+	private float prevMouseX = 0;
+	private float currentMouseX = 0;
+	private float prevMouseY = 0;
+	private float currentMouseY = 0;
+	private float deltaMouseX = 0;
+	private float deltaMouseY = 0;
 
 	public InputManager() {
 		keysJustPressed = new ArrayList<Integer>();
-		keysPrevPressed = new ArrayList<Integer>();
 		keysDown = new ArrayList<Integer>();
 		handlers = new ArrayList<IInputHandler>();
+		mouseDown = new ArrayList<Integer>();
+		mouseJustPressed = new ArrayList<Integer>();
 	}
 
 	protected InputData getData() {
@@ -25,13 +31,15 @@ public class InputManager {
 	}
 
 	protected void update() {
+		deltaMouseX = currentMouseX - prevMouseX;
+		deltaMouseY = currentMouseY - prevMouseY;
+		prevMouseX = currentMouseX;
+		prevMouseY = currentMouseY;
 		handlers.forEach(h -> h.handleInput(this));
-		keysJustPressed.forEach(key -> {
-			if (!keysPrevPressed.contains((Integer) key)) {
-				keysPrevPressed.add(key);
-			}
-		});
+		keysDown.addAll(keysJustPressed);
 		keysJustPressed.clear();
+		mouseDown.addAll(mouseJustPressed);
+		mouseJustPressed.clear();
 	}
 
 	protected static void dispose() {
@@ -39,10 +47,7 @@ public class InputManager {
 	}
 
 	protected void registerKeyPress(int keycode) {
-		if (keysPrevPressed.contains(keycode) && !keysDown.contains(keycode)) {
-			keysDown.add(keycode);
-			keysPrevPressed.remove((Integer) keycode);
-		} else {
+		if (!keysJustPressed.contains(keycode) && !keysDown.contains(keycode)) {
 			keysJustPressed.add(keycode);
 		}
 	}
@@ -50,7 +55,22 @@ public class InputManager {
 	protected void registerKeyReleased(int keycode) {
 		keysDown.remove((Integer) keycode);
 		keysJustPressed.remove((Integer) keycode);
-		keysPrevPressed.remove((Integer) keycode);
+	}
+	
+	protected void registerMouseButtonPress(int buttonCode) {
+		if (!mouseJustPressed.contains(buttonCode) && !mouseDown.contains(buttonCode)) {
+			mouseJustPressed.add(buttonCode);
+		}
+	}
+	
+	protected void registerMouseButtonRelease(int buttonCode) {
+		mouseDown.remove((Integer) buttonCode);
+		mouseJustPressed.remove((Integer) buttonCode);
+	}
+	
+	protected void registerMouseMovement(float x, float y) {
+		currentMouseX = x;
+		currentMouseY = y;
 	}
 
 	public boolean isFunctionKeyJustPressed(String function) {
@@ -72,6 +92,14 @@ public class InputManager {
 	public void addInputHandler(IInputHandler handler) {
 		if (!handlers.contains(handler))
 			handlers.add(handler);
+	}
+	
+	public float getDeltaMouseX() {
+		return deltaMouseX;
+	}
+	
+	public float getDeltaMouseY() {
+		return deltaMouseY;
 	}
 
 }
