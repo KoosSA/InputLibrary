@@ -206,5 +206,23 @@ public class InputManager {
 	public float getDeltaMouseY() {
 		return deltaMouseY;
 	}
+	
+	/**
+	 * Gets the cursor X position
+	 * 
+	 * @return cursor posX
+	 */
+	public float getCurrentMouseX() {
+		return currentMouseX;
+	}
+	
+	/**
+	 * Gets the cursor Y position
+	 * 
+	 * @return cursor posY
+	 */
+	public float getCurrentMouseY() {
+		return currentMouseY;
+	}
 
 }
