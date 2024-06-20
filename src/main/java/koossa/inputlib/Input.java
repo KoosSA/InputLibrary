@@ -150,6 +150,16 @@ public class Input implements Runnable {
 		if (manager == null) return;
 		manager.registerMouseButtonRelease(button);
 	}
+	
+	/**
+	 *  Call to register scroll wheel input.
+	 * @param xOffset scroll x offset
+	 * @param yOffset scroll y offset
+	 */
+	public static void addScrollOffset(float xOffset, float yOffset) {
+		if (manager == null) return;
+		manager.registerScrollEvent(xOffset, yOffset);
+	}
 
 	/**
 	 * Run.

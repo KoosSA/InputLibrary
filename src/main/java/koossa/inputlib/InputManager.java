@@ -43,6 +43,16 @@ public class InputManager {
 	
 	/** The delta mouse Y. */
 	private float deltaMouseY = 0;
+	
+	/**
+	 * The scroll X offset.
+	 */
+	private float scrollXOffset = 0;
+	
+	/**
+	 * The scroll Y offset.
+	 */
+	private float scrollYOffset = 0;
 
 	/**
 	 * Instantiates a new input manager.
@@ -77,6 +87,8 @@ public class InputManager {
 		keysJustPressed.clear();
 		mouseDown.addAll(mouseJustPressed);
 		mouseJustPressed.clear();
+		scrollXOffset = 0;
+		scrollYOffset = 0;
 	}
 
 	/**
@@ -137,6 +149,16 @@ public class InputManager {
 	protected void registerMouseMovement(float x, float y) {
 		currentMouseX = x;
 		currentMouseY = y;
+	}
+	
+	/**
+	 * Registers scroll wheel input.
+	 * @param xOffset scroll x offset
+	 * @param yOffset scroll y offset
+	 */
+	public void registerScrollEvent(float xOffset, float yOffset) {
+		scrollXOffset = xOffset;
+		scrollYOffset = yOffset;
 	}
 
 	/**
@@ -223,6 +245,22 @@ public class InputManager {
 	 */
 	public float getCurrentMouseY() {
 		return currentMouseY;
+	}
+
+	/**
+	 * Gets the scroll X offset
+	 * @return scroll x offset
+	 */
+	public float getScrollXOffset() {
+		return scrollXOffset;
+	}
+	
+	/**
+	 * Gets the scroll Y offset
+	 * @return scroll y offset
+	 */
+	public float getScrollYOffset() {
+		return scrollYOffset;
 	}
 
 }
