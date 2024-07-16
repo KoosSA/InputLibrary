@@ -53,6 +53,8 @@ public class InputManager {
 	 * The scroll Y offset.
 	 */
 	private float scrollYOffset = 0;
+	
+	private List<Integer> charactersPressed;
 
 	/**
 	 * Instantiates a new input manager.
@@ -63,6 +65,7 @@ public class InputManager {
 		handlers = new ArrayList<IInputHandler>();
 		mouseDown = new ArrayList<Integer>();
 		mouseJustPressed = new ArrayList<Integer>();
+		charactersPressed = new ArrayList<Integer>();
 	}
 
 	/**
@@ -89,6 +92,7 @@ public class InputManager {
 		mouseJustPressed.clear();
 		scrollXOffset = 0;
 		scrollYOffset = 0;
+		charactersPressed.clear();
 	}
 
 	/**
@@ -159,6 +163,14 @@ public class InputManager {
 	public void registerScrollEvent(float xOffset, float yOffset) {
 		scrollXOffset = xOffset;
 		scrollYOffset = yOffset;
+	}
+
+	/**
+	 * Registers a character press codepoint
+	 * @param codepoint char codepoint
+	 */
+	public void registerCharPress(int codepoint) {
+		charactersPressed.add(codepoint);
 	}
 
 	/**
@@ -261,6 +273,10 @@ public class InputManager {
 	 */
 	public float getScrollYOffset() {
 		return scrollYOffset;
+	}
+
+	public List<Integer> getCharactersInput() {
+		return charactersPressed;
 	}
 
 }

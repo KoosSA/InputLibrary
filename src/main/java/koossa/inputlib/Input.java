@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import com.koossa.logger.Log;
 
-// TODO: Auto-generated Javadoc
 /**
  * Interface with interacting with the input library
  * Methods are static. Call {@link Input#init(float)} to initialize library.
@@ -139,6 +138,15 @@ public class Input implements Runnable {
 	public static void addMouseButtonPressedEvent(int button) {
 		if (manager == null) return;
 		manager.registerMouseButtonPress(button);
+	}
+	
+	/**
+	 * Registers a char press
+	 * @param codepoint character codepoint
+	 */
+	public static void addCharPressEvent(int codepoint) {
+		if (manager == null) return;
+		manager.registerCharPress(codepoint);
 	}
 	
 	/**
